@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import annyang from 'annyang';
 import DraggableItem from './DraggableItem';
 import DropZone from './DropZone';
 
@@ -6,6 +7,34 @@ const App = () => {
   const [droppedItems, setDroppedItems] = useState([]);
   const [draggedItem, setDraggedItem] = useState(null);
   const [statusMessage, setStatusMessage] = useState('');
+
+  useEffect(() => {
+    if (annyang) {
+      const commands = {
+        'start drag *item': (item) => {
+          const itemId = item.toLowerCase().replace(/\s+/g, '');
+          setDraggedItem(itemId);
+          window.draggedItem = itemId;
+          setStatusMessage(`Drag started for ${itemId}.`);
+        },
+        'drop item': () => {
+          if (window.draggedItem) {
+            handleDropItem(window.draggedItem);
+            window.draggedItem = null;
+          } else {
+            setStatusMessage(`No item is being dragged.`);
+          }
+        },
+      };
+
+      annyang.addCommands(commands);
+      annyang.start();
+
+      return () => {
+        annyang.abort();
+      };
+    }
+  }, []);
 
   const handleDropItem = (itemId) => {
     if (itemId) {
@@ -24,11 +53,13 @@ const App = () => {
 
   const handleDragEnd = () => {
     setStatusMessage('');
+    window.draggedItem = null;
+    setDraggedItem(null);
   };
 
   return (
     <div>
-      <h1 tabIndex={0}>Accessible Drag and Drop</h1>
+      <h1>Accessible Drag and Drop with Voice Control</h1>
       <div
         aria-live='assertive'
         role='alert'
@@ -42,14 +73,14 @@ const App = () => {
           onDragStart={handleDragStart}
           onDragEnd={handleDragEnd}
         >
-          first item{' '}
+          Item 1
         </DraggableItem>
         <DraggableItem
           id='item2'
           onDragStart={handleDragStart}
           onDragEnd={handleDragEnd}
         >
-          Second item
+          Item 2
         </DraggableItem>
       </div>
       <DropZone id='dropzone' onDrop={handleDropItem}>

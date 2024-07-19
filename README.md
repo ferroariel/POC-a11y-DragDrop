@@ -1,8 +1,57 @@
-# React + Vite
+# Accessible Drag and Drop with Voice Control
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This repository contains a React application that demonstrates an accessible drag-and-drop implementation. This implementation is designed to be usable with a mouse, keyboard, and screen reader, and includes voice control functionality using the `annyang` library.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Keyboard Accessibility:** Draggable items can be activated using the `Enter` or `Space` key.
+- **Screen Reader Compatibility:** Aria attributes are used to provide status messages and ensure that draggable items and drop zones are accessible to screen readers.
+- **Voice Control:** The `annyang` library is used to enable voice commands for starting and completing drag-and-drop actions.
+
+## Installation
+
+1. Clone the repository:
+    ```bash
+    git clone https://github.com/your-username/accessible-drag-and-drop.git
+    cd accessible-drag-and-drop
+    ```
+
+2. Install dependencies:
+    ```bash
+    npm install
+    ```
+
+3. Start the development server:
+    ```bash
+    npm run dev
+    ```
+
+## Usage
+
+### Mouse and Keyboard Interaction
+
+- **Drag an item:**
+  - With the mouse: Click and hold the item you want to drag, then move it to the drop zone and release.
+  - With the keyboard: Focus on the item using the `Tab` key, then press `Enter` or `Space` to start dragging. Navigate to the drop zone and press `Enter` or `Space` again to drop the item.
+
+### Voice Commands
+
+Ensure your microphone is enabled and `annyang` is listening.
+
+- **Start dragging an item:** Say `start drag [item name]`. For example, `start drag item1`.
+- **Drop the item:** Say `drop item`.
+
+### Status Messages
+
+Status messages are provided via an `aria-live` region to inform screen reader users about the current state of the drag-and-drop operation.
+
+## Implementation Details
+
+### DraggableItem Component
+
+This component represents an item that can be dragged. It handles both mouse and keyboard interactions for starting a drag operation.
+
+```jsx
+const DraggableItem = ({ id, onDragStart, onDragEnd, children }) => {
+  // Component code...
+};
