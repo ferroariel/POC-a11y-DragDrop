@@ -18,7 +18,7 @@ const DraggableItem = ({ id, onDragStart, onDragEnd, children }) => {
   return (
     <div
       id={id}
-      role='textbox'
+      role='option'
       tabIndex='0'
       aria-label='Element to drag'
       aria-grabbed='false'

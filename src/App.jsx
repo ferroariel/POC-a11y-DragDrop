@@ -67,7 +67,7 @@ const App = () => {
       >
         {statusMessage}
       </div>
-      <div>
+      <div role='listbox'>
         <DraggableItem
           id='item1'
           onDragStart={handleDragStart}
