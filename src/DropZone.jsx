@@ -24,7 +24,7 @@ const DropZone = ({ id, onDrop, children }) => {
   return (
     <div
       id={id}
-      role='textbox'
+      role='application'
       aria-dropeffect='move'
       tabIndex='0'
       onKeyDown={handleKeyDown}
